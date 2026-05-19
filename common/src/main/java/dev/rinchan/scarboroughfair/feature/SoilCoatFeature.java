@@ -1,4 +1,4 @@
-package dev.rinchan.loamyend.feature;
+package dev.rinchan.scarboroughfair.feature;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;

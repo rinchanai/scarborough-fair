@@ -44,7 +44,7 @@ neoForge {
         }
         configureEach {
             logLevel = org.slf4j.event.Level.INFO
-            systemProperty 'loamyEnd.smoke', System.getProperty('loamyEnd.smoke', 'false')
+            systemProperty 'scarboroughFair.smoke', System.getProperty('scarboroughFair.smoke', 'false')
         }
     }
 }

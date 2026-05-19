@@ -68,9 +68,9 @@
       "minecraft:spring_lava"
     ],
     [
-      "loamy_end:soil_coat",
-      "loamy_end:water_pool",
-      "loamy_end:water_island",
+      "scarborough_fair:soil_coat",
+      "scarborough_fair:water_pool",
+      "scarborough_fair:water_island",
       "minecraft:trees_birch_and_oak",
       "minecraft:flower_plains",
       "minecraft:patch_grass_plain"

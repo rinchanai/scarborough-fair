@@ -1,7 +1,7 @@
-package dev.rinchan.loamyend.neoforge;
+package dev.rinchan.scarboroughfair.neoforge;
 
-import dev.rinchan.loamyend.LoamyEnd;
-import dev.rinchan.loamyend.registry.LoamyEndRegistries;
+import dev.rinchan.scarboroughfair.ScarboroughFair;
+import dev.rinchan.scarboroughfair.registry.ScarboroughFairRegistries;
 import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -17,21 +17,21 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
-@Mod(LoamyEnd.MOD_ID)
-public final class LoamyEndNeoForge {
+@Mod(ScarboroughFair.MOD_ID)
+public final class ScarboroughFairNeoForge {
     private static final int OUTER_RADIUS_MIN = 1024;
     private static final int OUTER_RADIUS_RANGE = 2304;
 
-    public LoamyEndNeoForge(IEventBus modBus) {
-        LoamyEndRegistries.register(modBus);
+    public ScarboroughFairNeoForge(IEventBus modBus) {
+        ScarboroughFairRegistries.register(modBus);
         NeoForge.EVENT_BUS.addListener(this::onPlayerChangedDimension);
-        if (Boolean.getBoolean("loamyEnd.smoke")) {
-            LoamyEndSmokeHarness.register();
+        if (Boolean.getBoolean("scarboroughFair.smoke")) {
+            ScarboroughFairSmokeHarness.register();
         }
     }
 
     private void onPlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
-        if (!event.getTo().equals(LoamyEnd.LEVEL) || !(event.getEntity() instanceof ServerPlayer player) || !(player.level() instanceof ServerLevel level)) {
+        if (!event.getTo().equals(ScarboroughFair.LEVEL) || !(event.getEntity() instanceof ServerPlayer player) || !(player.level() instanceof ServerLevel level)) {
             return;
         }
         BlockPos spawn = findOuterIslandSpawn(level, player.getUUID());

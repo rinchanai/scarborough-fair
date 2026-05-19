@@ -1,24 +1,24 @@
-package dev.rinchan.loamyend.neoforge;
+package dev.rinchan.scarboroughfair.neoforge;
 
-import dev.rinchan.loamyend.LoamyEnd;
+import dev.rinchan.scarboroughfair.ScarboroughFair;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 
-final class LoamyEndSmokeHarness {
-    private LoamyEndSmokeHarness() {
+final class ScarboroughFairSmokeHarness {
+    private ScarboroughFairSmokeHarness() {
     }
 
     static void register() {
-        NeoForge.EVENT_BUS.addListener(LoamyEndSmokeHarness::onServerStarted);
+        NeoForge.EVENT_BUS.addListener(ScarboroughFairSmokeHarness::onServerStarted);
     }
 
     private static void onServerStarted(ServerStartedEvent event) {
         var server = event.getServer();
-        var level = server.getLevel(LoamyEnd.LEVEL);
+        var level = server.getLevel(ScarboroughFair.LEVEL);
         if (level == null) {
-            throw new IllegalStateException("Loamy End dimension did not load");
+            throw new IllegalStateException("斯卡菠萝集市 dimension did not load");
         }
 
         int dirt = 0;
@@ -48,9 +48,9 @@ final class LoamyEndSmokeHarness {
                 }
             }
         }
-        System.out.println("LOAMY_END_SMOKE dirt=" + dirt + " stone=" + stone + " water=" + water + " logs=" + logs);
+        System.out.println("SCARBOROUGH_FAIR_SMOKE dirt=" + dirt + " stone=" + stone + " water=" + water + " logs=" + logs);
         if (dirt <= 0 || stone <= 0) {
-            throw new IllegalStateException("Loamy End smoke failed: expected dirt surface and stone interior");
+            throw new IllegalStateException("斯卡菠萝集市 smoke failed: expected dirt surface and stone interior");
         }
         server.halt(false);
     }

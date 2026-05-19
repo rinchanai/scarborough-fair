@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = 'loamy-end'
+rootProject.name = 'scarborough-fair'
 include 'neoforge'
