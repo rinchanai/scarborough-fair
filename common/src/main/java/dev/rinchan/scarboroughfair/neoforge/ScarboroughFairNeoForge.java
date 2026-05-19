@@ -14,6 +14,7 @@ import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
@@ -28,10 +29,16 @@ public final class ScarboroughFairNeoForge {
         if (Boolean.getBoolean("scarboroughFair.smoke")) {
             ScarboroughFairSmokeHarness.register();
         }
+        if (Boolean.getBoolean("scarboroughFair.screenshot")) {
+            ScreenshotServerHarness.register();
+            if (FMLEnvironment.dist.isClient()) {
+                ScreenshotClientHarness.register();
+            }
+        }
     }
 
     private void onPlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
-        if (!event.getTo().equals(ScarboroughFair.LEVEL) || !(event.getEntity() instanceof ServerPlayer player) || !(player.level() instanceof ServerLevel level)) {
+        if (Boolean.getBoolean("scarboroughFair.screenshot") || !event.getTo().equals(ScarboroughFair.LEVEL) || !(event.getEntity() instanceof ServerPlayer player) || !(player.level() instanceof ServerLevel level)) {
             return;
         }
         BlockPos spawn = findOuterIslandSpawn(level, player.getUUID());

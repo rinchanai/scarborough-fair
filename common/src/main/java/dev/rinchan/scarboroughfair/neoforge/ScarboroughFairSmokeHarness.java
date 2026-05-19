@@ -18,9 +18,10 @@ final class ScarboroughFairSmokeHarness {
         var server = event.getServer();
         var level = server.getLevel(ScarboroughFair.LEVEL);
         if (level == null) {
-            throw new IllegalStateException("斯卡菠萝集市 dimension did not load");
+            throw new IllegalStateException("Scarborough Fair dimension did not load");
         }
 
+        int grass = 0;
         int dirt = 0;
         int stone = 0;
         int water = 0;
@@ -34,7 +35,9 @@ final class ScarboroughFairSmokeHarness {
                     for (int z = minZ; z < minZ + 16; z++) {
                         for (int y = 0; y < 160; y++) {
                             var state = chunk.getBlockState(new net.minecraft.core.BlockPos(x, y, z));
-                            if (state.is(Blocks.DIRT)) {
+                            if (state.is(Blocks.GRASS_BLOCK)) {
+                                grass++;
+                            } else if (state.is(Blocks.DIRT)) {
                                 dirt++;
                             } else if (state.is(Blocks.STONE)) {
                                 stone++;
@@ -48,9 +51,9 @@ final class ScarboroughFairSmokeHarness {
                 }
             }
         }
-        System.out.println("SCARBOROUGH_FAIR_SMOKE dirt=" + dirt + " stone=" + stone + " water=" + water + " logs=" + logs);
-        if (dirt <= 0 || stone <= 0) {
-            throw new IllegalStateException("斯卡菠萝集市 smoke failed: expected dirt surface and stone interior");
+        System.out.println("SCARBOROUGH_FAIR_SMOKE grass=" + grass + " dirt=" + dirt + " stone=" + stone + " water=" + water + " logs=" + logs);
+        if (grass <= 0 || dirt <= 0 || stone <= 0) {
+            throw new IllegalStateException("Scarborough Fair smoke failed: expected grass surface, dirt sides, and stone interior");
         }
         server.halt(false);
     }

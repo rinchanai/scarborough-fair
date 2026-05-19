@@ -64,8 +64,10 @@ public class WaterIslandFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     private static boolean placeChunkPart(WorldGenLevel level, WaterIsland island, int minX, int minZ) {
-        int centerY = WaterPoolFeature.surfaceY(level, island.x, island.z);
-        if (centerY < level.getMinBuildHeight() + 4 || centerY > 150 || !WaterPoolFeature.isIslandSurface(level, island.x, centerY, island.z)) {
+        int sampleX = Math.max(minX, Math.min(island.x, minX + 15));
+        int sampleZ = Math.max(minZ, Math.min(island.z, minZ + 15));
+        int centerY = WaterPoolFeature.surfaceY(level, sampleX, sampleZ);
+        if (centerY < level.getMinBuildHeight() + 4 || centerY > 150 || !WaterPoolFeature.isIslandSurface(level, sampleX, centerY, sampleZ)) {
             return false;
         }
 

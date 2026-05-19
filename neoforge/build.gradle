@@ -37,7 +37,13 @@ neoForge {
         }
     }
     runs {
-        client { client() }
+        client {
+            client()
+            programArgument '--width'
+            programArgument '1920'
+            programArgument '--height'
+            programArgument '1080'
+        }
         server {
             server()
             programArgument '--nogui'
@@ -45,6 +51,8 @@ neoForge {
         configureEach {
             logLevel = org.slf4j.event.Level.INFO
             systemProperty 'scarboroughFair.smoke', System.getProperty('scarboroughFair.smoke', 'false')
+            systemProperty 'scarboroughFair.screenshot', System.getProperty('scarboroughFair.screenshot', 'false')
+            systemProperty 'scarboroughFair.screenshot.dir', System.getProperty('scarboroughFair.screenshot.dir', '')
         }
     }
 }
