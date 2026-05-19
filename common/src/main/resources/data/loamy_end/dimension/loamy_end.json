@@ -1,0 +1,11 @@
+{
+  "type": "loamy_end:loamy_end",
+  "generator": {
+    "type": "minecraft:noise",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "loamy_end:loamy_end"
+    },
+    "settings": "loamy_end:loamy_end"
+  }
+}

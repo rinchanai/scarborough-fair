@@ -1,0 +1,9 @@
+{
+  "feature": "loamy_end:soil_coat",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": 1
+    }
+  ]
+}
