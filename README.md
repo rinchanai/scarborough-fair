@@ -1,22 +1,22 @@
-# 斯卡菠萝集市
+# Scarborough Fair
 
-斯卡菠萝集市添加了一个末地岛屿形状的新维度：漂浮岛外表覆盖泥土，内部保留主世界石层和矿物生成，岛上会长橡树与白桦，并出现小水池和少量被水覆盖的岛屿。
+Scarborough Fair adds an End-shaped floating-island dimension with dirt-covered surfaces, overworld-style stone and ore strata, oak and birch trees, small water pools, and occasional water-covered islands.
 
-## 功能
+## Features
 
-- 地形使用原版末地岛屿密度形状。
-- 暴露表面是泥土，内部是主世界石头基底，方便常规矿物和模组石层通过标准世界生成规则生效。
-- 维度生物群系带有 overworld / plains / forest 标签，方便数据驱动的 biome modifier 识别。
-- 不生成紫颂植物，改生成橡树和白桦。
-- 岛上会生成小水池。
-- 稀有情况下会生成大面积水岛，边缘缺口允许水向下流动。
-- 玩家进入维度后会被放到外岛地表，而不是中央主岛。
+- Terrain uses the vanilla End island density shape.
+- Exposed island surfaces are dirt, while island interiors use overworld base stone so normal ore and stone replacement features can run.
+- The biome is tagged as overworld / plains / forest for data-driven biome modifiers.
+- Chorus plant decoration is replaced by oak and birch trees.
+- Small water pools can appear on islands.
+- Rare larger water islands can cover much of an island and leave gaps where water may spill downward.
+- Players entering the dimension are placed on an outer-island surface instead of the central island.
 
-## 维度 ID
+## Dimension ID
 
 - `scarborough_fair:scarborough_fair`
 
-## 构建
+## Build
 
 ```bash
 ./gradlew :neoforge:build
