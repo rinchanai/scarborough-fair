@@ -42,7 +42,7 @@ final class ScreenshotServerHarness {
         ScenicSpot spot = findScenicSpot(level);
         player.setGameMode(GameType.SPECTATOR);
         player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 20 * 180, 0, false, false));
-        player.teleportTo(level, spot.camera().getX() + 0.5D, spot.camera().getY() + 0.5D, spot.camera().getZ() + 0.5D, 135.0F, 30.0F);
+        player.teleportTo(level, spot.camera().getX() + 0.5D, spot.camera().getY() + 0.5D, spot.camera().getZ() + 0.5D, 135.0F, 48.0F);
         level.setDayTime(1500L);
         level.setWeatherParameters(0, 0, false, false);
         prepared = true;
@@ -69,7 +69,7 @@ final class ScreenshotServerHarness {
                     continue;
                 }
                 BlockPos target = score.target();
-                BlockPos camera = new BlockPos(target.getX() + 112, Math.min(target.getY() + 108, 220), target.getZ() + 112);
+                BlockPos camera = new BlockPos(target.getX() + 48, Math.min(target.getY() + 58, 190), target.getZ() + 48);
                 ScenicSpot spot = new ScenicSpot(target, camera, score.score());
                 if (best == null || spot.score() > best.score()) {
                     best = spot;
