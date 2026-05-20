@@ -9,6 +9,7 @@ import net.minecraft.client.Screenshot;
 import net.minecraft.client.gui.screens.ConnectScreen;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.resolver.ServerAddress;
+import net.minecraft.client.CloudStatus;
 import net.minecraft.client.tutorial.TutorialSteps;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.common.NeoForge;
@@ -51,18 +52,19 @@ final class ScreenshotClientHarness {
         minecraft.options.tutorialStep = TutorialSteps.NONE;
         minecraft.options.hideGui = true;
         minecraft.options.pauseOnLostFocus = false;
-        minecraft.options.fov().set(92);
-        minecraft.options.renderDistance().set(24);
+        minecraft.options.fov().set(88);
+        minecraft.options.renderDistance().set(32);
+        minecraft.options.cloudStatus().set(CloudStatus.OFF);
         minecraft.gui.getChat().clearMessages(false);
         minecraft.getToasts().clear();
         minecraft.player.setYRot(135.0F);
-        minecraft.player.setXRot(48.0F);
+        minecraft.player.setXRot(30.0F);
 
-        if (!captured && inWorldTicks >= 900) {
+        if (!captured && inWorldTicks >= 1200) {
             save(minecraft, "scarborough-fair-dimension-shader.png");
             captured = true;
         }
-        if ((captured && inWorldTicks >= 960) || inWorldTicks >= 1300) {
+        if ((captured && inWorldTicks >= 1260) || inWorldTicks >= 1600) {
             minecraft.stop();
         }
     }
