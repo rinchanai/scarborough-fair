@@ -1,0 +1,9 @@
+{
+  "feature": "scarborough_fair:center_void_hole",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": 1
+    }
+  ]
+}

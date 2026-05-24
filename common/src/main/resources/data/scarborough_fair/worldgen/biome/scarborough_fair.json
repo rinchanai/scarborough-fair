@@ -72,7 +72,9 @@
       "minecraft:flower_plains",
       "minecraft:patch_grass_plain"
     ],
-    []
+    [
+      "scarborough_fair:center_void_hole"
+    ]
   ],
   "has_precipitation": true,
   "spawn_costs": {},
