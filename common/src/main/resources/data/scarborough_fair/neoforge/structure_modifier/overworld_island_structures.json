@@ -1,0 +1,8 @@
+{
+  "type": "scarborough_fair:add_island_biomes_to_matching_structures",
+  "source_biomes": "#minecraft:is_overworld",
+  "additional_biomes": [
+    "scarborough_fair:main_island",
+    "scarborough_fair:outer_islands"
+  ]
+}

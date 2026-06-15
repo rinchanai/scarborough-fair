@@ -1,8 +1,6 @@
 {
   "replace": false,
   "values": [
-    "scarborough_fair:scarborough_fair",
-    "scarborough_fair:main_island",
     "scarborough_fair:outer_islands"
   ]
 }

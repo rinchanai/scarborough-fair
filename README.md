@@ -11,11 +11,21 @@ Scarborough Fair adds an End-shaped floating-island dimension with grass-covered
 - Chorus plant decoration is replaced by oak and birch trees.
 - Small water pools can appear on islands.
 - Rare larger water islands can cover much of an island and leave gaps where water may spill downward.
-- Players entering the dimension are placed on an outer-island surface instead of the central island.
+- Optional config can start new players on a deterministic outer-island surface in Scarborough Fair and set their initial personal respawn point there; this is disabled by default.
+- Optional config controls whether Scarborough Fair uses overworld-targeting structures, passive mob spawns, and hostile mob spawns.
 
 ## Dimension ID
 
 - `scarborough_fair:scarborough_fair`
+
+## Common config
+
+Generated at `config/scarborough_fair-common.toml`:
+
+- `spawn.defaultSpawnInDimension = false`: keep vanilla overworld first spawn by default. When enabled, new players are sent to a Scarborough Fair outer island with `changeDimension`, and their initial personal respawn point is set there, matching Aether-style start-in-dimension behavior.
+- `worldgen.useOverworldStructureList = true`: allow overworld-targeting structures to also target Scarborough Fair island biomes.
+- `worldgen.generatePassiveMobs = true`: add passive/ambient island biome spawns.
+- `worldgen.generateHostileMobs = false`: keep natural hostile mob spawns disabled by default.
 
 ## Build
 

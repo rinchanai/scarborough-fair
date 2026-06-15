@@ -1,8 +1,12 @@
 package dev.rinchan.scarboroughfair.neoforge;
 
 import dev.rinchan.scarboroughfair.ScarboroughFair;
+import dev.rinchan.scarboroughfair.ScarboroughFairConfig;
 import dev.rinchan.scarboroughfair.registry.ScarboroughFairRegistries;
+import java.io.File;
+import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -12,8 +16,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.portal.DimensionTransition;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
@@ -22,10 +30,13 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 public final class ScarboroughFairNeoForge {
     private static final int OUTER_RADIUS_MIN = 1024;
     private static final int OUTER_RADIUS_RANGE = 2304;
+    private static final Set<UUID> NEW_PLAYER_SPAWNS = ConcurrentHashMap.newKeySet();
 
     public ScarboroughFairNeoForge(IEventBus modBus) {
+        ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.COMMON, ScarboroughFairConfig.SPEC);
         ScarboroughFairRegistries.register(modBus);
-        NeoForge.EVENT_BUS.addListener(this::onPlayerChangedDimension);
+        NeoForge.EVENT_BUS.addListener(this::onPlayerDataLoad);
+        NeoForge.EVENT_BUS.addListener(this::onPlayerLoggedIn);
         if (Boolean.getBoolean("scarboroughFair.smoke")) {
             ScarboroughFairSmokeHarness.register();
         }
@@ -35,14 +46,35 @@ public final class ScarboroughFairNeoForge {
                 ScreenshotClientHarness.register();
             }
         }
+        if (Boolean.getBoolean("scarboroughFair.vmVideo")) {
+            VmVideoServerHarness.register();
+            if (FMLEnvironment.dist.isClient()) {
+                VmVideoClientHarness.register();
+            }
+        }
     }
 
-    private void onPlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
-        if (Boolean.getBoolean("scarboroughFair.screenshot") || !event.getTo().equals(ScarboroughFair.LEVEL) || !(event.getEntity() instanceof ServerPlayer player) || !(player.level() instanceof ServerLevel level)) {
+    private void onPlayerDataLoad(PlayerEvent.LoadFromFile event) {
+        File vanillaData = new File(event.getPlayerDirectory(), event.getPlayerUUID() + ".dat");
+        if (!vanillaData.exists()) {
+            NEW_PLAYER_SPAWNS.add(UUID.fromString(event.getPlayerUUID()));
+        }
+    }
+
+    private void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player) || !NEW_PLAYER_SPAWNS.remove(player.getUUID()) || !ScarboroughFairConfig.DEFAULT_SPAWN_IN_DIMENSION.get()) {
+            return;
+        }
+        ServerLevel level = player.server.getLevel(ScarboroughFair.LEVEL);
+        if (level == null || player.level().dimension() != Level.OVERWORLD) {
             return;
         }
         BlockPos spawn = findOuterIslandSpawn(level, player.getUUID());
-        player.teleportTo(level, spawn.getX() + 0.5D, spawn.getY(), spawn.getZ() + 0.5D, player.getYRot(), player.getXRot());
+        Vec3 position = new Vec3(spawn.getX() + 0.5D, spawn.getY(), spawn.getZ() + 0.5D);
+        DimensionTransition transition = new DimensionTransition(level, position, Vec3.ZERO, player.getYRot(), player.getXRot(), false, DimensionTransition.DO_NOTHING);
+        if (player.changeDimension(transition) != null) {
+            player.setRespawnPosition(ScarboroughFair.LEVEL, spawn, player.getYRot(), true, false);
+        }
     }
 
     private static BlockPos findOuterIslandSpawn(ServerLevel level, UUID playerId) {

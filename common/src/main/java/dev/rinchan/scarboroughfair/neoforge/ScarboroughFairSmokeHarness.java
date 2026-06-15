@@ -25,7 +25,7 @@ final class ScarboroughFairSmokeHarness {
         int dirt = 0;
         int stone = 0;
         int water = 0;
-        int logs = 0;
+        int outerLogs = 0;
         for (int cx = 64; cx <= 72; cx++) {
             for (int cz = -4; cz <= 4; cz++) {
                 var chunk = level.getChunk(cx, cz, ChunkStatus.FULL, true);
@@ -44,16 +44,24 @@ final class ScarboroughFairSmokeHarness {
                             } else if (state.is(Blocks.WATER)) {
                                 water++;
                             } else if (state.is(Blocks.OAK_LOG) || state.is(Blocks.BIRCH_LOG)) {
-                                logs++;
+                                outerLogs++;
                             }
                         }
                     }
                 }
             }
         }
-        System.out.println("SCARBOROUGH_FAIR_SMOKE grass=" + grass + " dirt=" + dirt + " stone=" + stone + " water=" + water + " logs=" + logs);
+        var mainBiome = level.getBiome(new net.minecraft.core.BlockPos(0, 80, 0)).unwrapKey().orElseThrow().location();
+        var outerBiome = level.getBiome(new net.minecraft.core.BlockPos(1400, 80, 0)).unwrapKey().orElseThrow().location();
+        System.out.println("SCARBOROUGH_FAIR_SMOKE grass=" + grass + " dirt=" + dirt + " stone=" + stone + " water=" + water + " outerLogs=" + outerLogs + " mainBiome=" + mainBiome + " outerBiome=" + outerBiome);
         if (grass <= 0 || dirt <= 0 || stone <= 0) {
             throw new IllegalStateException("Scarborough Fair smoke failed: expected grass surface, dirt sides, and stone interior");
+        }
+        if (!mainBiome.equals(ScarboroughFair.id("main_island")) || !outerBiome.equals(ScarboroughFair.id("outer_islands"))) {
+            throw new IllegalStateException("Scarborough Fair smoke failed: expected split main/outer island biomes");
+        }
+        if (outerLogs <= 0) {
+            throw new IllegalStateException("Scarborough Fair smoke failed: expected sparse outer-island ordinary trees");
         }
         server.halt(false);
     }

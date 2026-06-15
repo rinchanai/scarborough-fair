@@ -3,8 +3,7 @@
   "generator": {
     "type": "minecraft:noise",
     "biome_source": {
-      "type": "minecraft:fixed",
-      "biome": "scarborough_fair:scarborough_fair"
+      "type": "scarborough_fair:scarborough_fair"
     },
     "settings": "scarborough_fair:scarborough_fair"
   }
