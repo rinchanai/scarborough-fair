@@ -1,9 +1,0 @@
-{
-  "feature": "scarborough_fair:soil_coat",
-  "placement": [
-    {
-      "type": "minecraft:count",
-      "count": 1
-    }
-  ]
-}

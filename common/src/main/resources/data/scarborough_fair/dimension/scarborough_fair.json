@@ -1,10 +1,12 @@
 {
   "type": "scarborough_fair:scarborough_fair",
   "generator": {
-    "type": "minecraft:noise",
+    "type": "scarborough_fair:end_shape_overworld_content",
     "biome_source": {
-      "type": "scarborough_fair:scarborough_fair"
+      "type": "minecraft:multi_noise",
+      "preset": "minecraft:overworld"
     },
-    "settings": "scarborough_fair:scarborough_fair"
+    "shape_settings": "minecraft:end",
+    "content_settings": "minecraft:overworld"
   }
 }

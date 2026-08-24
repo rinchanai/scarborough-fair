@@ -1,8 +1,0 @@
-{
-  "type": "scarborough_fair:add_configured_spawns",
-  "biomes": [
-    "scarborough_fair:main_island",
-    "scarborough_fair:outer_islands",
-    "scarborough_fair:scarborough_fair"
-  ]
-}

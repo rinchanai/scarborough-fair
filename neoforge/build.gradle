@@ -59,6 +59,18 @@ neoForge {
 
 neoForge.ideSyncTask tasks.named('generateModMetadata')
 
+sourceSets.test.java.srcDir 'src/test/java'
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.2')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'com.google.code.gson:gson:2.11.0'
+}
+
+tasks.named('test', Test) {
+    useJUnitPlatform()
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
