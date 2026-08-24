@@ -46,12 +46,6 @@ public final class ScarboroughFairNeoForge {
                 ScreenshotClientHarness.register();
             }
         }
-        if (Boolean.getBoolean("scarboroughFair.vmVideo")) {
-            VmVideoServerHarness.register();
-            if (FMLEnvironment.dist.isClient()) {
-                VmVideoClientHarness.register();
-            }
-        }
     }
 
     private void onPlayerDataLoad(PlayerEvent.LoadFromFile event) {

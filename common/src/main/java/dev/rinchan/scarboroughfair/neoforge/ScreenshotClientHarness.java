@@ -56,10 +56,10 @@ final class ScreenshotClientHarness {
         minecraft.gui.getChat().clearMessages(false);
         minecraft.getToasts().clear();
         minecraft.player.setYRot(135.0F);
-        minecraft.player.setXRot(48.0F);
+        minecraft.player.setXRot(4.0F);
 
         if (!captured && inWorldTicks >= 900) {
-            save(minecraft, "scarborough-fair-dimension-shader.png");
+            save(minecraft, "scarborough-fair-0.2.0.png");
             captured = true;
         }
         if ((captured && inWorldTicks >= 960) || inWorldTicks >= 1300) {

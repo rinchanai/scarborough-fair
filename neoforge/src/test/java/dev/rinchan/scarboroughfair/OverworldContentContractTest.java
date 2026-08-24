@@ -48,6 +48,14 @@ class OverworldContentContractTest {
     }
 
     @Test
+    void removedReturnHoleHasNoRuntimeOrCaptureHarness() throws IOException {
+        Path packageRoot = ROOT.resolve("common/src/main/java/dev/rinchan/scarboroughfair/neoforge");
+        assertFalse(Files.exists(packageRoot.resolve("VmVideoServerHarness.java")));
+        assertFalse(Files.exists(packageRoot.resolve("VmVideoClientHarness.java")));
+        assertFalse(Files.readString(packageRoot.resolve("ScarboroughFairNeoForge.java")).contains("vmVideo"));
+    }
+
+    @Test
     void onlyOptionalFirstSpawnRemainsConfigurable() throws IOException {
         String source = Files.readString(ROOT.resolve(
             "common/src/main/java/dev/rinchan/scarboroughfair/ScarboroughFairConfig.java"
