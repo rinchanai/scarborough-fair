@@ -48,11 +48,24 @@ class OverworldContentContractTest {
     }
 
     @Test
-    void removedReturnHoleHasNoRuntimeOrCaptureHarness() throws IOException {
+    void productionContainsNoRuntimeOrCaptureHarness() throws IOException {
         Path packageRoot = ROOT.resolve("common/src/main/java/dev/rinchan/scarboroughfair/neoforge");
-        assertFalse(Files.exists(packageRoot.resolve("VmVideoServerHarness.java")));
-        assertFalse(Files.exists(packageRoot.resolve("VmVideoClientHarness.java")));
-        assertFalse(Files.readString(packageRoot.resolve("ScarboroughFairNeoForge.java")).contains("vmVideo"));
+        for (String retired : List.of(
+            "VmVideoServerHarness.java",
+            "VmVideoClientHarness.java",
+            "ScarboroughFairSmokeHarness.java",
+            "ScreenshotServerHarness.java",
+            "ScreenshotClientHarness.java"
+        )) {
+            assertFalse(Files.exists(packageRoot.resolve(retired)), "production harness remains: " + retired);
+        }
+        String entrypoint = Files.readString(packageRoot.resolve("ScarboroughFairNeoForge.java"));
+        assertFalse(entrypoint.contains("vmVideo"));
+        assertFalse(entrypoint.contains("scarboroughFair.smoke"));
+        assertFalse(entrypoint.contains("scarboroughFair.screenshot"));
+        assertFalse(entrypoint.contains("new BlockPos(OUTER_RADIUS_MIN, 96, 0)"));
+        assertTrue(entrypoint.contains("if (spawn == null)"));
+        assertFalse(Files.readString(ROOT.resolve("neoforge/build.gradle")).contains("scarboroughFair.screenshot"));
     }
 
     @Test

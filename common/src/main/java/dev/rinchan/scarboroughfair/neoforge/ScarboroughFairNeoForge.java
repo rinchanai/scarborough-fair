@@ -22,7 +22,6 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
@@ -37,15 +36,6 @@ public final class ScarboroughFairNeoForge {
         ScarboroughFairRegistries.register(modBus);
         NeoForge.EVENT_BUS.addListener(this::onPlayerDataLoad);
         NeoForge.EVENT_BUS.addListener(this::onPlayerLoggedIn);
-        if (Boolean.getBoolean("scarboroughFair.smoke")) {
-            ScarboroughFairSmokeHarness.register();
-        }
-        if (Boolean.getBoolean("scarboroughFair.screenshot")) {
-            ScreenshotServerHarness.register();
-            if (FMLEnvironment.dist.isClient()) {
-                ScreenshotClientHarness.register();
-            }
-        }
     }
 
     private void onPlayerDataLoad(PlayerEvent.LoadFromFile event) {
@@ -64,6 +54,9 @@ public final class ScarboroughFairNeoForge {
             return;
         }
         BlockPos spawn = findOuterIslandSpawn(level, player.getUUID());
+        if (spawn == null) {
+            return;
+        }
         Vec3 position = new Vec3(spawn.getX() + 0.5D, spawn.getY(), spawn.getZ() + 0.5D);
         DimensionTransition transition = new DimensionTransition(level, position, Vec3.ZERO, player.getYRot(), player.getXRot(), false, DimensionTransition.DO_NOTHING);
         if (player.changeDimension(transition) != null) {
@@ -84,8 +77,7 @@ public final class ScarboroughFairNeoForge {
                 return candidate;
             }
         }
-        BlockPos fallback = findSafeSurface(level, OUTER_RADIUS_MIN, 0);
-        return fallback != null ? fallback : new BlockPos(OUTER_RADIUS_MIN, 96, 0);
+        return findSafeSurface(level, OUTER_RADIUS_MIN, 0);
     }
 
     private static BlockPos findSafeSurface(ServerLevel level, int x, int z) {

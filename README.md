@@ -21,7 +21,7 @@ Scarborough Fair does not add a portal or item entry route. Packs can provide th
 
 ## Updating from 0.1.x
 
-Version 0.2.0 replaces every old Scarborough Fair biome and world-generation registry entry. Existing 0.1.x dimension chunks are not a supported migration target. Back up the world and regenerate `dimensions/scarborough_fair/scarborough_fair` before loading it with 0.2.0.
+Version 0.2.0 replaced every old Scarborough Fair biome and world-generation registry entry. Existing 0.1.x dimension chunks are not a supported migration target. Back up the world and regenerate `dimensions/scarborough_fair/scarborough_fair` before loading 0.2.x. Version 0.2.1 does not change the 0.2.0 world-generation schema.
 
 ## Common config
 

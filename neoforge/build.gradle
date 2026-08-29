@@ -50,9 +50,6 @@ neoForge {
         }
         configureEach {
             logLevel = org.slf4j.event.Level.INFO
-            systemProperty 'scarboroughFair.smoke', System.getProperty('scarboroughFair.smoke', 'false')
-            systemProperty 'scarboroughFair.screenshot', System.getProperty('scarboroughFair.screenshot', 'false')
-            systemProperty 'scarboroughFair.screenshot.dir', System.getProperty('scarboroughFair.screenshot.dir', '')
         }
     }
 }
