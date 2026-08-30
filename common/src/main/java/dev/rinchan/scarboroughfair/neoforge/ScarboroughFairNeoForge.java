@@ -27,7 +27,6 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
 @Mod(ScarboroughFair.MOD_ID)
 public final class ScarboroughFairNeoForge {
-    private static final int OUTER_RADIUS_MIN = 1024;
     private static final int OUTER_RADIUS_RANGE = 2304;
     private static final Set<UUID> NEW_PLAYER_SPAWNS = ConcurrentHashMap.newKeySet();
 
@@ -65,11 +64,11 @@ public final class ScarboroughFairNeoForge {
     }
 
     private static BlockPos findOuterIslandSpawn(ServerLevel level, UUID playerId) {
-        long seed = level.getSeed() ^ playerId.getMostSignificantBits() ^ Long.rotateLeft(playerId.getLeastSignificantBits(), 17);
+        long seed = OuterSpawnPolicy.candidateSeed(level.getSeed(), playerId);
         RandomSource random = RandomSource.create(seed);
         for (int attempt = 0; attempt < 2048; attempt++) {
             double angle = random.nextDouble() * Mth.TWO_PI;
-            int radius = OUTER_RADIUS_MIN + random.nextInt(OUTER_RADIUS_RANGE);
+            int radius = OuterSpawnPolicy.MINIMUM_RADIUS + random.nextInt(OUTER_RADIUS_RANGE);
             int x = Mth.floor(Math.cos(angle) * radius) + random.nextInt(33) - 16;
             int z = Mth.floor(Math.sin(angle) * radius) + random.nextInt(33) - 16;
             BlockPos candidate = findSafeSurface(level, x, z);
@@ -77,7 +76,7 @@ public final class ScarboroughFairNeoForge {
                 return candidate;
             }
         }
-        return findSafeSurface(level, OUTER_RADIUS_MIN, 0);
+        return findSafeSurface(level, OuterSpawnPolicy.MINIMUM_RADIUS, 0);
     }
 
     private static BlockPos findSafeSurface(ServerLevel level, int x, int z) {
@@ -94,7 +93,7 @@ public final class ScarboroughFairNeoForge {
         if (!level.getBlockState(feet).isAir() || !level.getBlockState(feet.above()).isAir()) {
             return null;
         }
-        if (Math.sqrt((double) x * x + (double) z * z) < OUTER_RADIUS_MIN) {
+        if (!OuterSpawnPolicy.isOutsideMinimumRadius(x, z)) {
             return null;
         }
         return feet;

@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "repository": "scarborough-fair",
+  "status": "not_executed",
+  "scenarios": [
+    {
+      "id": "worldgen-semantics-and-codec",
+      "owner": "NeoForge registry and worldgen GameTest",
+      "status": "not_executed",
+      "prerequisites": [
+        "A fixed-seed fresh test world",
+        "Bootstrapped Minecraft registries and the Scarborough Fair generator codec"
+      ],
+      "steps": [
+        "Decode the shipped dimension JSON with RegistryOps and round-trip the custom generator codec",
+        "Generate center, inner-ring, and outer-ring chunk samples",
+        "Sample biome, surface column, features, ores, structure candidates, fluid level, and generated entities"
+      ],
+      "assertions": [
+        "Codec round-trip preserves biome source, shape settings, and content settings registry keys",
+        "Generated terrain contains floating islands separated by void with End shape and fluid settings",
+        "Observed biome, surface, feature, ore, structure, and mob semantics come from Overworld content"
+      ],
+      "covers": ["SF-I1", "SF-I2", "SF-I3", "SF-I4", "SF-I8"]
+    },
+    {
+      "id": "first-spawn-authority-and-safety",
+      "owner": "NeoForge player lifecycle GameTest",
+      "status": "not_executed",
+      "prerequisites": [
+        "New and existing playerdata fixtures",
+        "Configuration enabled and disabled variants",
+        "Success, missing-dimension, and failed-transition fixtures"
+      ],
+      "steps": [
+        "Log in new and existing UUIDs under each configuration variant",
+        "Repeat candidate generation for the same world seed and UUID",
+        "Present solid, fluid, no-collision, cactus, magma, powder-snow, leaf, and normal surface fixtures",
+        "Force both successful and failed changeDimension results"
+      ],
+      "assertions": [
+        "Default configuration moves no player; enabled configuration moves only a truly new player once",
+        "Candidate sequence is deterministic and accepted positions are at least 1024 blocks from origin",
+        "Only collision-safe, fluid-free, non-hazardous surfaces with two clear body blocks are accepted",
+        "Personal respawn is set only after a successful dimension transition"
+      ],
+      "covers": ["SF-I5", "SF-I6", "SF-I7"]
+    }
+  ]
+}
